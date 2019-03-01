@@ -5,7 +5,7 @@ import random
 
 getcontext().prec = 100
 
-#attempt
+#try this
 
 def T(Z):
     a = Decimal(Decimal('1')/Z[0]) - Decimal(math.floor(Decimal('1')/Z[0]))
