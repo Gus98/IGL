@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from decimal import*
 import random
 
+#this is a test, please work
+
 getcontext().prec = 100
 
 def T(Z):
