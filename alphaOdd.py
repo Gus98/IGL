@@ -11,10 +11,10 @@ def T(Z, alpha):
         e = 1
     else:
         e = -1
-    k = math.floor((1/abs(Z[0]) - alpha + 2)/2)
-    a = 1/abs(Z[0]) - 2 * k
-    if (2 * k + e * Z[1]) != 0:
-        b = 1/(2 * k + e * Z[1])
+    k = math.floor((1/abs(Z[0]) - alpha + 3)/2)
+    a = 1/abs(Z[0]) - 2 * k + 1
+    if (2 * k - 1 + e * Z[1]) != 0:
+        b = 1/(2 * k - 1 + e * Z[1])
     else:
         b = 0
     return [a,b]
@@ -34,34 +34,19 @@ def addx_toplot(x, P, alpha):
     P[0] = P[0] + x_points
     P[1] = P[1] + y_points
 
-def bound(x, alpha):
-    #this is the function that is graphed
-    y = (2 + (x+1) * ((1 + alpha)/(1 - alpha)))/(2 + (x + 1) * ((3 * alpha - 1)/(1 - alpha)))
-    return y
-def f(x, alpha):
-    #this uses the bound function to generate the list of points to plot later
-    y = []
-    for i in x:
-        y = y + [bound(i, alpha)]
-    return y
-
 points = [[],[]]
 
-M = 1000
+M = 200
 #the number of points to be tested
 
-alp = 0.5
+alp = 0.8
 #the alpha value used in the natural extension
 
-t1 = np.arange(alp - 2, alp, 0.001)
 for n in range(1,M):
     z = ((n - random.uniform(0,1))/M + alp - 1)
     addx_toplot(z, points, alp)
 
 plt.scatter(points[0],points[1], marker=".")
 #this plots the natural extension
-
-plt.plot(t1, f(t1, alp), 'r')
-#this plots the function that would ideally be the left bound
 
 plt.show()
