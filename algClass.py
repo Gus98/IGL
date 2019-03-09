@@ -49,14 +49,15 @@ class Alg(object):
             v = (self.a + self.b * math.sqrt(self.c))/self.d
         else:
             v = 0
-            print("value was error")
+            print("value was error " + str(self.a) + ", " + str(self.b) + ", " + str(self.c) + ", " + str(self.d))
         return v
 
     def aabs(self):
         # |x| function
+        res = self
         if self.value() < 0:
-            self.mult(-1)
-        return self
+            res = self.mult(-1)
+        return res
 
     def reduce(self):
         # how to simplify an algebraic number
@@ -67,26 +68,36 @@ class Alg(object):
         while reduction:
             reduction = False
             for i in range(2, abs(self.a) + 1):
-                if res.a % i== 0:
-                    if res.b % i== 0:
-                        if res.d % i== 0:
-                            x = res.a//i
-                            y = res.b//i
-                            z = res.d//i
-                            res = Alg(x, y, self.c, z)
+                if res.a % i == 0:
+                    if res.b % i == 0:
+                        if res.d % i == 0:
                             reduction = True
-                            break
+                            res.a = res.a//i
+                            res.b = res.b//i
+                            res.d = res.d//i
         return res
 
 def T(X, alpha):
     #the natural extension on a list of two algebraic numbers
+    print(X[0].a)
+    print(X[0].b)
+    print(X[0].c)
+    print(X[0].d)
+    print(X[0].value())
+    print(X[1].a)
+    print(X[1].b)
+    print(X[1].c)
+    print(X[1].d)
+    print(X[1].value())
     k = math.floor((1/abs(X[0].value()) - alpha + 2)/2)
+    print("k is " + str(k))
     if X[0].value() < 0:
         e = -1
     else:
         e = 1
     p = X[0].aabs().inv().addQ(-2 * k, 1).reduce()
     q = X[1].mult(e).addQ(2 * k, 1).inv().reduce()
+    print("goes to")
     Y = [p,q]
     return Y
 
@@ -97,6 +108,8 @@ def plotAlg(X, P, alpha):
     y_points = [X[1].value()]
     a = X[0]
     for i in range(0,10):
+    #gets very copmutationally difficult very fast after i = 10 due to irreducable fractions
+        print("----- i is " + str(i) + " -----")
         X = T(X, alpha)
         x_points.append(X[0].value())
         y_points.append(X[1].value())
@@ -106,8 +119,8 @@ def plotAlg(X, P, alpha):
 
 points = [[],[]]
 
-alp = 0.8
-U = [Alg(-1, 1, 5, 2), Alg(0, 0, 0, 1)]
+alp = 1.5
+U = [Alg(-1, 1, 5, 2), Alg(0, 0, 1, 1)]
 plotAlg(U, points, alp)
 
 plt.scatter(points[0],points[1], marker=".")
