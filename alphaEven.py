@@ -26,7 +26,7 @@ def addx_toplot(x, P, alpha):
     x_points = [x]
     y_points = [0]
     a = x
-    for i in range(0,100):
+    for i in range(0, 150):
         point = T(point, alpha)
         x_points.append(point[0])
         y_points.append(point[1])

@@ -38,7 +38,7 @@ def addx_toplot(x, P, alpha):
 points = [[],[]]
 
 M = 1500
-alp = 0.6
+alp = 0.9
 for n in range(1,M):
     z = ((n - random.uniform(0,1))/M + alp - 1)
     addx_toplot(z, points, alp)

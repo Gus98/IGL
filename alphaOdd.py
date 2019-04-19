@@ -26,7 +26,7 @@ def addx_toplot(x, P, alpha):
     x_points = [x]
     y_points = [0]
     a = x
-    for i in range(0,100):
+    for i in range(0,150):
         point = T(point, alpha)
         x_points.append(point[0])
         y_points.append(point[1])
@@ -36,10 +36,10 @@ def addx_toplot(x, P, alpha):
 
 points = [[],[]]
 
-M = 200
+M = 1500
 #the number of points to be tested
 
-alp = 0.8
+alp = math.sqrt(2)-1
 #the alpha value used in the natural extension
 
 for n in range(1,M):

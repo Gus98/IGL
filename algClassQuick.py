@@ -83,21 +83,20 @@ class Alg(object):
 
 def T(X, alpha):
     #the natural extension on a list of two algebraic numbers
-    print(X[0].a)
-    print(X[0].b)
-    print(X[0].c)
-    print(X[0].d)
-    print(X[0].value())
-    print(X[1])
-    k = math.floor((1/abs(X[0].value()) - alpha + 2)/2)
-    print("k is " + str(k))
+    if X[0].value() != 0:
+        k = math.floor((1/abs(X[0].value()) - alpha + 2)/2)
+    else:
+        k = 0
     if X[0].value() < 0:
         e = -1
     else:
         e = 1
+    print(str(2 * k) + ", " + str(e))
     p = X[0].aabs().inv().addQ(-2 * k, 1).reduce()
-    q = 1/(X[1] * e + 2 * k)
-    print("goes to")
+    if X[1] * e + 2 * k != 0:
+        q = 1/(X[1] * e + 2 * k)
+    else:
+        q = 0
     Y = [p,q]
     return Y
 
@@ -107,9 +106,8 @@ def plotAlg(X, P, alpha):
     x_points = [X[0].value()]
     y_points = [X[1]]
     a = X[0]
-    for i in range(0, 20):
+    for i in range(0, 15):
     #gets very copmutationally difficult very fast after i = 10 due to irreducable fractions
-        print("----- i is " + str(i) + " -----")
         X = T(X, alpha)
         x_points.append(X[0].value())
         y_points.append(X[1])
@@ -121,9 +119,20 @@ points = [[],[]]
 
 alp = 0.5
 #this is the alpha value used
-#to change number of interations, adjuct the range of the for loop in plotAlg
-U = [Alg(8, -3, 11, 3), 0]
-plotAlg(U, points, alp)
+#to change number of interations, adjust the range of the for loop in plotAlg
+
+for n in [2, 3, 5, 7, 11]:
+    for a in range(-3, 3):
+        for b in range(-3, 3):
+            if a + b * math.sqrt(n) > 0:
+                list_a = list(range(math.ceil(a/alp), math.ceil(a/alp) + 3))
+                list_b = list(range(math.floor(a/(alp-2)), math.floor(a/(alp-2)) - 3))
+            else:
+                list_a = list(range(math.floor(a/alp), math.floor(a/alp) - 3))
+                list_b = list(range(math.ceil(a/(alp-2)), math.ceil(a/(alp-2)) + 3))
+            for d in (list_a + list_b):
+                A = [Alg(a, b, n, d), 0.0]
+                plotAlg(A, points, alp)
 
 plt.scatter(points[0],points[1], marker=".")
 plt.show()
